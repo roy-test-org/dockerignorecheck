@@ -1,32 +1,22 @@
 version: '1.0'
 steps:
-  build:
-    title: Building Docker Image
-    type: build
-    image_name: roycodefresh/dockerignorecheck
-    working_directory: ./
-    dockerfile: Dockerfile
-  push1:
-    type: push
-    title: Standard push to registry1
-    provider: docker
-    registry: 192.168.99.100:5001
-    tag: master
-    candidate: ${{build}}
-  push2:
-    type: push
-    title: Standard push to registry2
-    provider: docker
-    registry: 192.168.99.100:5002
-    tag: hello-world
-    candidate: ${{build}}
-  ecr:
-    type: push
-    title: Standard push to amazon ECR
-    provider: docker
-    registry: 839151377425.dkr.ecr.us-east-1.amazonaws.com
-    tag: roycheck:hello-world
-    candidate: ${{build}}
+  composition:
+    type: composition
+    title: Compose with Dbs & run tests
+    description: Running tests...
+    working_directory: '${{build_image}}'
+    composition:
+      version: '2'
+    composition_candidates:
+      mariadb:
+        image: node
+        command:
+          - "node"
+          - "-e"
+          - "let http = require('http'); http.createServer((req, res) => { console.log('Got request'); res.end('$VAR1 $VAR2') }).listen(3000, () => console.log('Server Started'))"]
+      api:
+        image: 'busybox'
+        command: sleep 10
 #  push:
 #    type: push
 #    title: ECR push
