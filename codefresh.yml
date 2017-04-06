@@ -8,9 +8,10 @@ steps:
     composition:
       version: '2'
       services:
+        mariadb:
+          image: node
     composition_candidates:
       mariadb:
-        image: node
         command:
           - "node"
           - "-e"
