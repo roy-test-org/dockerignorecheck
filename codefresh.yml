@@ -13,7 +13,7 @@ steps:
         command:
           - "node"
           - "-e"
-          - "let http = require('http'); http.createServer((req, res) => { console.log('Got request'); res.end('$VAR1 $VAR2') }).listen(3000, () => console.log('Server Started'))"]
+          - "let http = require('http'); http.createServer((req, res) => { console.log('Got request'); res.end('$VAR1 $VAR2') }).listen(3000, () => console.log('Server Started'))"
       api:
         image: 'busybox'
         command: sleep 10
